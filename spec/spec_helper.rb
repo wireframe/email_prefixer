@@ -1,3 +1,5 @@
+require 'coveralls'
+Coveralls.wear!
 require File.expand_path("../dummy/config/environment.rb", __FILE__)
 
 RSpec.configure do |config|
