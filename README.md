@@ -1,3 +1,7 @@
+[![Build Status](https://travis-ci.org/wireframe/email_prefixer.svg?branch=master)](https://travis-ci.org/wireframe/email_prefixer)
+[![Coverage Status](https://coveralls.io/repos/wireframe/email_prefixer/badge.png?branch=master)](https://coveralls.io/r/wireframe/email_prefixer?branch=master)
+[![Code Climate](https://codeclimate.com/github/wireframe/email_prefixer/badges/gpa.svg)](https://codeclimate.com/github/wireframe/email_prefixer)
+
 # EmailPrefixer
 Automatically prefix all delivered emails with the application name
 and Rails environment.  A helpful configuration for setting up email
