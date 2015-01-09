@@ -12,3 +12,8 @@
 *.o
 *.a
 mkmf.log
+
+*.sqlite3
+*.log
+spec/dummy/tmp
+
