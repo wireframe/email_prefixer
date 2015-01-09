@@ -3,6 +3,7 @@ module EmailPrefixer
     def delivering_email(mail)
       mail.subject.prepend(subject_prefix)
     end
+    alias_method :previewing_email, :delivering_email
 
     private
 
