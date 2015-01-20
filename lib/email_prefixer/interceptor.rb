@@ -1,3 +1,5 @@
+require 'active_support/core_ext/module/delegation'
+
 module EmailPrefixer
   class Interceptor
     def delivering_email(mail)
@@ -7,10 +9,16 @@ module EmailPrefixer
 
     private
 
+    delegate :application_name, :stage_name, to: :configuration
+
+    def configuration
+      EmailPrefixer.configuration
+    end
+
     def subject_prefix
       prefixes = []
-      prefixes << EmailPrefixer.configuration.application_name
-      prefixes << Rails.env.upcase unless Rails.env.production?
+      prefixes << application_name
+      prefixes << stage_name.upcase unless stage_name == "production"
       "[#{prefixes.join(' ')}] "
     end
   end
