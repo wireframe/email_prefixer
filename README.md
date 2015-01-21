@@ -25,17 +25,41 @@ gem 'email_prefixer'
 ```
 
 ## Configuration
+All EmailPrefixer configuration can be customized using
+a standard Rails config initializer.
 
-#### Custom Application Name
-EmailPrefixer automatically infers the application name
-from the Rails application class name, but this can be
-changed using a standard config/initializer.
+```ruby
+# config/initializers/email_prefixer.rb
+EmailPrefixer.configure do |config|
+  # custom configuration goes here
+end
+```
+
+Some of the more common configuration options are listed here.
+See the source code and test suite for a full list of options.
+
+#### application_name - Customize Application Name
+The application name is automatically inferred from the Rails application class name
+and can be overridden via the `application_name` setting.
 
 Example:
 ```ruby
 # config/initializers/email_prefixer.rb
 EmailPrefixer.configure do |config|
-  config.application_name = 'MyCompany'
+  config.application_name = 'MyApp'
+end
+```
+
+#### stage_name - Customize Environment Stage Name
+The application environment/stage name is automatically
+inferred from the running Rails.env and it can be overridden
+via the `stage_name` setting.
+
+Example:
+```ruby
+# config/initializers/email_prefixer.rb
+EmailPrefixer.configure do |config|
+  config.stage_name = 'demo'
 end
 ```
 

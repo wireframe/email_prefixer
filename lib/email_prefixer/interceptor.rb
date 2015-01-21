@@ -1,5 +1,12 @@
 module EmailPrefixer
   class Interceptor
+    extend Forwardable
+    def_delegators :@configuration, :application_name, :stage_name
+
+    def initialize
+      @configuration = EmailPrefixer.configuration
+    end
+
     def delivering_email(mail)
       mail.subject.prepend(subject_prefix)
     end
@@ -9,8 +16,8 @@ module EmailPrefixer
 
     def subject_prefix
       prefixes = []
-      prefixes << EmailPrefixer.configuration.application_name
-      prefixes << Rails.env.upcase unless Rails.env.production?
+      prefixes << application_name
+      prefixes << stage_name.upcase unless stage_name == 'production'
       "[#{prefixes.join(' ')}] "
     end
   end

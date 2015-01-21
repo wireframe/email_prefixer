@@ -6,6 +6,7 @@ module EmailPrefixer
       ActionMailer::Base.register_interceptor(interceptor)
       EmailPrefixer.configure do |config|
         config.application_name ||= app.class.parent_name
+        config.stage_name ||= Rails.env
       end
     end
   end
