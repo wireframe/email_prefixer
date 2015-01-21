@@ -25,5 +25,19 @@ RSpec.describe EmailPrefixer::Interceptor do
         expect(email.subject).to eq '[CustomApp STAGING] Here is the Subject'
       end
     end
+
+    context 'when stage_name == production' do
+      before do
+        @original_stage_name = EmailPrefixer.configuration.stage_name
+        EmailPrefixer.configuration.stage_name = 'production'
+        email.deliver_now
+      end
+      after do
+        EmailPrefixer.configuration.stage_name = @original_stage_name
+      end
+      it 'does not add the stage_name to the subject' do
+        expect(email.subject).to eq '[CustomApp] Here is the Subject'
+      end
+    end
   end
 end
