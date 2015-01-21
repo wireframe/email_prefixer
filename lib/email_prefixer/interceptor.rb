@@ -1,7 +1,12 @@
-require 'active_support/core_ext/module/delegation'
-
 module EmailPrefixer
   class Interceptor
+    extend Forwardable
+    def_delegators :@configuration, :application_name, :stage_name
+
+    def initialize
+      @configuration = EmailPrefixer.configuration
+    end
+
     def delivering_email(mail)
       mail.subject.prepend(subject_prefix)
     end
@@ -9,16 +14,10 @@ module EmailPrefixer
 
     private
 
-    delegate :application_name, :stage_name, to: :configuration
-
-    def configuration
-      EmailPrefixer.configuration
-    end
-
     def subject_prefix
       prefixes = []
       prefixes << application_name
-      prefixes << stage_name.upcase unless stage_name == "production"
+      prefixes << stage_name.upcase unless stage_name == 'production'
       "[#{prefixes.join(' ')}] "
     end
   end
