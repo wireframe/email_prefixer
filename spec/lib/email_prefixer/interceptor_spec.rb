@@ -2,23 +2,28 @@ require 'rails_helper'
 
 RSpec.describe EmailPrefixer::Interceptor do
   describe '#delivering_email' do
-    it 'adds prefix to delivered mail subject' do
-      ExampleMailer.simple_mail.deliver
-      expect(last_email.subject).to eq '[CustomApp TEST] Here is the Subject'
+    subject(:email) { ExampleMailer.simple_mail }
+    context 'when application_name is configured' do
+      before do
+        email.deliver_now
+      end
+      it 'adds prefix to delivered mail subject' do
+        expect(email.subject).to eq '[CustomApp TEST] Here is the Subject'
+      end
     end
 
-    it 'enables customizing the environment name' do
-      original_stage_name, EmailPrefixer.configuration.stage_name = EmailPrefixer.configuration.stage_name, 'staging'
-
-      ExampleMailer.simple_mail.deliver
-
-      expect(last_email.subject).to eq '[CustomApp STAGING] Here is the Subject'
-
-      EmailPrefixer.configuration.stage_name = original_stage_name
-    end
-
-    def last_email
-      ActionMailer::Base.deliveries.last
+    context 'when stage_name is configured' do
+      before do
+        @original_stage_name = EmailPrefixer.configuration.stage_name
+        EmailPrefixer.configuration.stage_name = 'staging'
+        email.deliver_now
+      end
+      after do
+        EmailPrefixer.configuration.stage_name = @original_stage_name
+      end
+      it 'adds custom stage name to subject' do
+        expect(email.subject).to eq '[CustomApp STAGING] Here is the Subject'
+      end
     end
   end
 end
