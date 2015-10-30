@@ -1,5 +1,11 @@
-# Example configuration
+# # Example configuration
 # EmailPrefixer.configure do |config|
-#   config.application_name = 'CustomApp' # override the default application name if desired
-#   config.stage_name = 'staging' # specify a custom environment name
+#   # override the default application name if desired
+#   config.application_name = 'CustomApp'
+
+#   # specify a custom environment name
+#   config.stage_name = 'staging'
+
+#   # change the format of the subject
+#   config.subject_format = "<%{application_name} - %{stage_name}> %{subject}"
 # end
