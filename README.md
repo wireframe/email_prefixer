@@ -63,6 +63,20 @@ EmailPrefixer.configure do |config|
 end
 ```
 
+#### builder - Override the prefix format
+Want to override the default format for the email prefix? Assign a custom
+`proc` to the `builder` setting like so:
+
+Example:
+```ruby
+# config/initializers/email_prefixer.rb
+EmailPrefixer.configure do |config|
+  config.builder = lambda do
+    '**MyEmailPrefix** '
+  end
+end
+```
+
 ## Contributing
 
 1. Fork it ( https://github.com/wireframe/email_prefixer/fork )
