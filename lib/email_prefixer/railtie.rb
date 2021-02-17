@@ -11,8 +11,10 @@ module EmailPrefixer
         config.builder ||= EmailPrefixer::Configuration::DEFAULT_BUILDER
       end
       interceptor = EmailPrefixer::Interceptor.new(config)
-      ActionMailer::Base.register_preview_interceptor(interceptor)
-      ActionMailer::Base.register_interceptor(interceptor)
+      ActiveSupport.on_load :action_mailer do
+        register_preview_interceptor(interceptor)
+        register_interceptor(interceptor)
+      end
     end
   end
 end
